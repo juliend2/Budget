@@ -1,0 +1,22 @@
+## --- .NET ---
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+*.exe
+*.dll
+*.pdb
+*.user
+*.suo
+*.sln.docstates
+
+## --- User Secrets & Local Settings ---
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+
+## --- Test Results & Coverage ---
+TestResults/
+*.sequenced
+coverage/
+*.lcov
