@@ -29,3 +29,20 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+td {
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: aliceblue;
+}
+td.right {
+  text-align: right;
+}
+td.left-padding {
+  padding-left: .5rem;
+}
+tr.dark {
+  background-color: #555;
+  color: white;
+}

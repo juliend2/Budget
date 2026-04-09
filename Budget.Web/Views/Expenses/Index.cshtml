@@ -1,6 +1,7 @@
 ﻿@model List<List<Budget.Web.Models.BudgetLine>>;
 @{
     ViewData["Title"] = "Home page";
+    Layout = "_Layout";
 }
 
 <div class="text-center">
@@ -11,15 +12,15 @@
             @foreach (var item in budgetChunk) {
                 <tr>
                     <td>@item.Description</td>
-                    <td>@item.ToBePaidAt.ToShortDateString()</td>
-                    <td align='right'>@item.Remaining $</td>
+                    <td class='left-padding'>@item.ToBePaidAt.ToShortDateString()</td>
+                    <td class='left-padding  right'>@item.Remaining $</td>
                 </tr>
                 total += (int)item.Remaining;
             }
-            <tr>
-                <td class='dark'>En date du @budgetChunk.Last().PayDate().ToShortDateString()</td>
+            <tr class='dark'>
+                <td>En date du @budgetChunk.Last().PayDate().ToShortDateString()</td>
                 <td></td>
-                <td align='right'>@total $</td>
+                <td class='left-padding  right'>@total $</td>
             </tr>
         }
     </table>
