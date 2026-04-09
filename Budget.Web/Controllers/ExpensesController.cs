@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Budget.Web.Repositories;
+using Budget.Web.Models;
 
 namespace Budget.Web.Controllers;
 
@@ -15,6 +16,7 @@ public class ExpensesController : Controller
     public async Task<IActionResult> Index()
     {
         var data = await _repository.GetAllAsync();
-        return View(data);
+        var splitData = BudgetLines.SplitBudgetLinesByPay((List<BudgetLine>)data);
+        return View(splitData);
     }
 }

@@ -36,7 +36,7 @@ public class ExpenseServiceTests
         };
 
         // Act
-        var results = BudgetLines.GetAllSplitAsync(data);
+        var results = BudgetLines.SplitBudgetLinesByPay(data);
 
         // Assert
         Assert.Single(results);
@@ -54,7 +54,7 @@ public class ExpenseServiceTests
         };
 
         // Act
-        var results = BudgetLines.GetAllSplitAsync(data);
+        var results = BudgetLines.SplitBudgetLinesByPay(data);
 
         // Assert
         Assert.Equal(2, results.Count);
@@ -72,7 +72,7 @@ public class ExpenseServiceTests
         };
 
         // Act
-        var results = BudgetLines.GetAllSplitAsync(data);
+        var results = BudgetLines.SplitBudgetLinesByPay(data);
 
         // Assert
         Assert.Equal(new DateTime(2026, 04, 01), results[0][0].ToBePaidAt);

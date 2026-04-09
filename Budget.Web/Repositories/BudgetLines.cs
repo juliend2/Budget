@@ -23,12 +23,12 @@ public class BudgetLines : IBudgetLines
         using var connection = new MySqlConnection(_connectionString);
 
         const string sql = @"
-            SELECT 
-                d.id AS Id, 
-                d.amount AS Amount, 
-                d.description AS Description, 
-                d.to_be_paid_at AS ToBePaidAt, 
-                p.paid_at AS PaidAt, 
+            SELECT
+                d.id AS Id,
+                d.amount AS Amount,
+                d.description AS Description,
+                d.to_be_paid_at AS ToBePaidAt,
+                p.paid_at AS PaidAt,
                 d.expense_template_id AS ExpenseTemplateId,
                 (d.amount - COALESCE(SUM(p.amount), 0)) AS Remaining
             FROM expenses d
@@ -40,7 +40,7 @@ public class BudgetLines : IBudgetLines
         return await connection.QueryAsync<BudgetLine>(sql);
     }
 
-    public static List<List<BudgetLine>> GetAllSplitAsync(List<BudgetLine> lines)
+    public static List<List<BudgetLine>> SplitBudgetLinesByPay(List<BudgetLine> lines)
     {
         if (lines.Count() < 2)
         {

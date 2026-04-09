@@ -15,4 +15,18 @@ public record BudgetLine
         var half = ToBePaidAt.Day <= 15 ? 1 : 2;
         return $"{ToBePaidAt.Year}-{ToBePaidAt.Month}-{half}";
     }
+
+    public DateTime PayDate()
+    {
+        var date = ToBePaidAt;
+        if (date.Day <= 15)
+        {
+            return new DateTime(date.Year, date.Month, 15);
+        }
+        else
+        {
+            int lastDay = DateTime.DaysInMonth(date.Year, date.Month);
+            return new DateTime(date.Year, date.Month, lastDay);
+        }
+    }
 }

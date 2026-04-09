@@ -1,16 +1,26 @@
-﻿@model IEnumerable<Budget.Web.Models.BudgetLine>;
+﻿@model List<List<Budget.Web.Models.BudgetLine>>;
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
     <table>
-    @foreach (var item in Model) {
-        <tr>
-            <td>@item.Description</td>
-            <td>@item.ToBePaidAt.ToShortDateString()</td>
-            <td>@item.Remaining $</td>
-        </tr>
-    }
+        @foreach (var budgetChunk in Model)
+        {
+            var total = 0;
+            @foreach (var item in budgetChunk) {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>@item.ToBePaidAt.ToShortDateString()</td>
+                    <td align='right'>@item.Remaining $</td>
+                </tr>
+                total += (int)item.Remaining;
+            }
+            <tr>
+                <td class='dark'>En date du @budgetChunk.Last().PayDate().ToShortDateString()</td>
+                <td></td>
+                <td align='right'>@total $</td>
+            </tr>
+        }
     </table>
 </div>
