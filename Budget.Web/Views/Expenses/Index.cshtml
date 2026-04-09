@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Budget.Web.Models.BudgetLine>;
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <table>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@item.Description</td>
+            <td>@item.Remaining $</td>
+        </tr>
+    }
+        
+    </table>
+</div>
