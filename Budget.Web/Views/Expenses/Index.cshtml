@@ -8,10 +8,9 @@
     @foreach (var item in Model) {
         <tr>
             <td>@item.Description</td>
-            <td>@item.ToBePaidAt.ToString() </td>
+            <td>@item.ToBePaidAt.ToShortDateString()</td>
             <td>@item.Remaining $</td>
         </tr>
     }
-        
     </table>
 </div>
