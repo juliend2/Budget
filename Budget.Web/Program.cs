@@ -2,10 +2,18 @@ using Budget.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. AJOUT DU SUPPORT MVC
+// --- CONFIGURATION OF THE SERVICES (Before the build) ---
 builder.Services.AddControllersWithViews(); 
 builder.Services.AddScoped<IBudgetLines, BudgetLines>();
 
+var mvcBuilder = builder.Services.AddControllersWithViews();
+
+if (builder.Environment.IsDevelopment())
+{
+    mvcBuilder.AddRazorRuntimeCompilation();
+}
+
+// --- END CONFIGURATION ----------------------------------
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -19,8 +27,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-
-// 2. ACTIVATION DES CONTROLLERS
 app.MapControllers(); 
 
 app.MapControllerRoute(
