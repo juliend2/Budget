@@ -12,7 +12,7 @@ public record BudgetLine
 
     public string MapKey()
     {
-        var half = ToBePaidAt.Day <= 15 ? 1 : 2; // Utilise <= 15 pour inclure le 15
+        var half = ToBePaidAt.Day <= 15 ? 1 : 2;
         return $"{ToBePaidAt.Year}-{ToBePaidAt.Month}-{half}";
     }
 }

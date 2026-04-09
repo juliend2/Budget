@@ -20,10 +20,8 @@ public class BudgetLines : IBudgetLines
 
     public async Task<IEnumerable<BudgetLine>> GetAllAsync()
     {
-        // return Task.FromResult(new List<BudgetLine>());
         using var connection = new MySqlConnection(_connectionString);
 
-        // Ta requête SQL vue au début
         const string sql = @"
             SELECT 
                 d.id AS Id, 
