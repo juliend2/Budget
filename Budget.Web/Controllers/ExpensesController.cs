@@ -15,6 +15,7 @@ public class ExpensesController : Controller
 
     public async Task<IActionResult> Index()
     {
+        _repository.CreateRepeatableExpenses();
         var data = await _repository.GetAllAsync();
         var splitData = BudgetLines.SplitBudgetLinesByPay((List<BudgetLine>)data);
         return View(splitData);

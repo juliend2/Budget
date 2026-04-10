@@ -2,6 +2,8 @@ namespace Budget.Web.Models;
 
 public record BudgetLine
 {
+    public BudgetLine() { } // Empty constructor for Dapper
+    
     public int Id { get; init; }
     public decimal Amount { get; init; }
     public string Description { get; init; } = string.Empty;
