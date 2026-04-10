@@ -1,10 +1,13 @@
-﻿@model List<List<Budget.Web.Models.BudgetLine>>;
+@model List<List<Budget.Web.Models.BudgetLine>>;
 @{
     ViewData["Title"] = "Accueil";
     Layout = "_Layout";
 }
 
 <div class="text-center">
+    <div class="mb-2">
+        <a asp-action="Create" class="btn btn-primary btn-sm">+ Add</a>
+    </div>
     <table>
         @foreach (var budgetChunk in Model)
         {
@@ -14,6 +17,12 @@
                     <td>@item.Description</td>
                     <td class='left-padding'>@item.ToBePaidAt.ToShortDateString()</td>
                     <td class='left-padding  right'>@item.Remaining $</td>
+                    <td class='left-padding'>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this expense?')">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 total += (int)item.Remaining;
             }
@@ -21,8 +30,8 @@
                 <td>En date du @budgetChunk.Last().PayDate().ToShortDateString()</td>
                 <td></td>
                 <td class='left-padding  right'>@total $</td>
+                <td></td>
             </tr>
         }
     </table>
 </div>
-

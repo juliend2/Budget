@@ -1,0 +1,19 @@
+@model Budget.Web.Models.BudgetLineForm
+
+<div class="form-group mb-3">
+    <label asp-for="Description" class="form-label">Description</label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
+    <label asp-for="Amount" class="form-label">Amount</label>
+    <input asp-for="Amount" type="number" step="0.01" class="form-control" />
+    <span asp-validation-for="Amount" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
+    <label asp-for="ToBePaidAt" class="form-label">To Be Paid At</label>
+    <input asp-for="ToBePaidAt" type="date" class="form-control" />
+    <span asp-validation-for="ToBePaidAt" class="text-danger"></span>
+</div>
