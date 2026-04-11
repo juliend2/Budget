@@ -39,10 +39,16 @@ tr:nth-child(even) {
 td.right {
   text-align: right;
 }
-td.left-padding {
+td.left-padding, th.left-padding {
   padding-left: .5rem;
 }
 tr.dark {
   background-color: #555;
   color: white;
+}
+th {
+  text-align: left;
+}
+td.gray {
+  color: gray;
 }

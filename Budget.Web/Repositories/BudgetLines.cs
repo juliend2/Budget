@@ -1,7 +1,6 @@
 using Budget.Web.Models;
 using MySqlConnector;
 using Dapper;
-using System.Data.Common;
 
 namespace Budget.Web.Repositories;
 
