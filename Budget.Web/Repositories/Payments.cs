@@ -6,7 +6,7 @@ namespace Budget.Web.Repositories;
 
 public interface IPayments
 {
-    
+    Task CreateAsync(PaymentForm form);
 }
 
 public class Payments : IPayments
@@ -25,7 +25,7 @@ public class Payments : IPayments
         await connection.ExecuteAsync(
             @"INSERT INTO payments (amount, paid_at, expense_id)
               VALUES (@Amount, @PaidAt, @ExpenseId)",
-            new { form.Amount, DateTime.Now, form.ExpenseId });
+            new { Amount = form.Amount, PaidAt = DateTime.Now, ExpenseId = form.ExpenseId });
     }
 
 }

@@ -21,4 +21,12 @@ public class PaymentsController : Controller
         return View(new PaymentForm() { ExpenseId = expenseId });
     }
 
+    [HttpPost("Create", Name = "CreatePayment")]
+    public async Task<IActionResult> Create(PaymentForm form)
+    {
+        if (!ModelState.IsValid) return View(form);
+        await _repository.CreateAsync(form);
+        return RedirectToAction("Index", "Expenses");
+    }
+
 }

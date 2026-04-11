@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // --- CONFIGURATION OF THE SERVICES (Before the build) ---
 builder.Services.AddControllersWithViews(); 
 builder.Services.AddScoped<IBudgetLines, BudgetLines>();
+builder.Services.AddScoped<IPayments, Payments>();
 
 var mvcBuilder = builder.Services.AddControllersWithViews();
 
