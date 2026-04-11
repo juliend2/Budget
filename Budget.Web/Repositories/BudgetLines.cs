@@ -82,7 +82,8 @@ public class BudgetLines : IBudgetLines
         foreach (var c in candidates)
         {
             Console.WriteLine($"ici: {c.Id} {c.Description} {c.Amount} {c.NextPaymentDate}");
-            if (c.NextPaymentDate < new DateTime(2026, 05, 01))
+            var untilWhen = DateTime.Now.AddMonths(1);
+            if (c.NextPaymentDate < untilWhen) // Avoids creating expenses for the next day
             {
                 await connection.ExecuteAsync(
                     @"INSERT INTO expenses
@@ -90,14 +91,6 @@ public class BudgetLines : IBudgetLines
                     VALUES
                         (@Amount, @ToBePaidAt, @Description, @ExpenseTemplateId)
                     ON DUPLICATE KEY UPDATE id = id ", // Avoids duplicates
-                        /*
-                        TODO: apply this on the database before deployment:
-                            ALTER TABLE expenses
-                            ADD CONSTRAINT UQ_Expense_Duplicate 
-                            UNIQUE (description, amount, to_be_paid_at);
-
-                            ALTER TABLE budget_db.expenses ADD created_at DATE DEFAULT NOW() NOT NULL;
-                        */
                     new { Amount = c.Amount, ToBePaidAt = c.NextPaymentDate, Description = c.Description, ExpenseTemplateId = c.ExpenseTemplateId }
                 );
             }
