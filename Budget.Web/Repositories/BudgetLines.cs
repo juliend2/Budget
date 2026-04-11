@@ -8,6 +8,10 @@ namespace Budget.Web.Repositories;
 public interface IBudgetLines
 {
     Task<IEnumerable<BudgetLine>> GetAllAsync();
+    Task<BudgetLine?> GetByIdAsync(int id);
+    Task CreateAsync(BudgetLineForm form);
+    Task UpdateAsync(BudgetLineForm form);
+    Task DeleteAsync(int id);
     void CreateRepeatableExpenses();
 }
 
@@ -40,6 +44,57 @@ public class BudgetLines : IBudgetLines
             ORDER BY d.to_be_paid_at";
 
         return await connection.QueryAsync<BudgetLine>(sql);
+    }
+
+    public async Task<BudgetLine?> GetByIdAsync(int id)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+
+        const string sql = @"
+            SELECT
+                d.id AS Id,
+                d.amount AS Amount,
+                d.description AS Description,
+                d.to_be_paid_at AS ToBePaidAt,
+                p.paid_at AS PaidAt,
+                d.expense_template_id AS ExpenseTemplateId,
+                (d.amount - COALESCE(SUM(p.amount), 0)) AS Remaining
+            FROM expenses d
+            LEFT JOIN payments p ON d.id = p.expense_id
+            WHERE d.id = @Id
+            GROUP BY d.id";
+
+        return await connection.QueryFirstOrDefaultAsync<BudgetLine>(sql, new { Id = id });
+    }
+
+    public async Task CreateAsync(BudgetLineForm form)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+
+        await connection.ExecuteAsync(
+            @"INSERT INTO expenses (amount, description, to_be_paid_at)
+              VALUES (@Amount, @Description, @ToBePaidAt)",
+            new { form.Amount, form.Description, form.ToBePaidAt });
+    }
+
+    public async Task UpdateAsync(BudgetLineForm form)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+
+        await connection.ExecuteAsync(
+            @"UPDATE expenses
+              SET amount = @Amount, description = @Description, to_be_paid_at = @ToBePaidAt
+              WHERE id = @Id",
+            new { form.Amount, form.Description, form.ToBePaidAt, form.Id });
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+
+        await connection.ExecuteAsync(
+            "DELETE FROM expenses WHERE id = @Id",
+            new { Id = id });
     }
 
     public async void CreateRepeatableExpenses()
