@@ -120,7 +120,7 @@ public class BudgetLines : IBudgetLines
                     et.repeatability_interval_pace
                 FROM expenses AS e
                 JOIN grouped_expenses AS ge ON e.to_be_paid_at = ge.max_to_be_paid_at
-                LEFT JOIN expenses_templates AS et ON et.id = e.expense_template_id
+                LEFT JOIN expense_templates AS et ON et.id = e.expense_template_id
                 WHERE et.id IS NOT NULL
             )
             SELECT *,

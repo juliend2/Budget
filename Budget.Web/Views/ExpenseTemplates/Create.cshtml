@@ -1,0 +1,17 @@
+@model Budget.Web.Models.ExpenseTemplateForm
+@{
+    ViewData["Title"] = "Add Expense Template";
+    Layout = "_Layout";
+}
+
+<h2>Add Expense Template</h2>
+
+<form asp-action="Create" method="post">
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

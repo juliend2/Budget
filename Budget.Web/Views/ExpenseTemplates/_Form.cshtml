@@ -1,0 +1,32 @@
+@model Budget.Web.Models.ExpenseTemplateForm
+
+<div class="form-group mb-3">
+    <label asp-for="Description" class="form-label">Description</label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
+    <label asp-for="Amount" class="form-label">Amount</label>
+    <input asp-for="Amount" type="number" step="0.01" class="form-control" />
+    <span asp-validation-for="Amount" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
+    <label asp-for="InitialToBePaidOn" class="form-label">To Be Paid At</label>
+    <input asp-for="InitialToBePaidOn" type="date" class="form-control" />
+    <span asp-validation-for="InitialToBePaidOn" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
+    <label asp-for="RepeatabilityIntervalPace" class="form-label">Interval Pace</label>
+    <select asp-for="RepeatabilityIntervalPace" class="form-select">
+        <option value="">Select Interval Pace</option>
+        <option value="">None</option>
+        <option value="D">Daily</option>
+        <option value="W">Weekly</option>
+        <option value="M">Monthly</option>
+        <option value="Y">Yearly</option>
+    </select>
+    <span asp-validation-for="RepeatabilityIntervalPace" class="text-danger"></span>
+</div>

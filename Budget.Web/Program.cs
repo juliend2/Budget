@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(); 
 builder.Services.AddScoped<IBudgetLines, BudgetLines>();
 builder.Services.AddScoped<IPayments, Payments>();
+builder.Services.AddScoped<IExpenseTemplates, ExpenseTemplates>();
 
 var mvcBuilder = builder.Services.AddControllersWithViews();
 
