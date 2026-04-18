@@ -13,7 +13,7 @@
             <th class="left-padding">Description</th>
             <th class="left-padding">Amount</th>
             <th class="left-padding">To Be Paid At</th>
-            <th class="left-padding">Interval Pace</th>
+            <th class="left-padding">Every (interval)</th>
             <th></th>
         </tr>
         @foreach (var item in Model)
@@ -22,7 +22,7 @@
                 <td class='left-padding'>@item.Description</td>
                 <td class='left-padding  right  gray'>@item.Amount $</td>
                 <td class='left-padding'>@item.InitialToBePaidOn.ToShortDateString()</td>
-                <td class='left-padding'>@(item.RepeatabilityIntervalPace == null ? "None" : item.RepeatabilityIntervalPace == "D" ? "Daily" : item.RepeatabilityIntervalPace == "W" ? "Weekly" : item.RepeatabilityIntervalPace == "M" ? "Monthly" : item.RepeatabilityIntervalPace == "Y" ? "Yearly" : "")</td>
+                <td class='left-padding'>@(item.RepeatabilityIntervalUnit) @(item.RepeatabilityIntervalPace == null ? "None" : item.RepeatabilityIntervalPace == "D" ? "Days" : item.RepeatabilityIntervalPace == "W" ? "Weeks" : item.RepeatabilityIntervalPace == "M" ? "Months" : item.RepeatabilityIntervalPace == "Y" ? "Years" : "")</td>
                 <td class='left-padding'>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">Edit</a>
                     <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline">
