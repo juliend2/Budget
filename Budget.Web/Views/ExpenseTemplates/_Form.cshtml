@@ -19,6 +19,12 @@
 </div>
 
 <div class="form-group mb-3">
+    <label asp-for="RepeatabilityIntervalUnit" class="form-label">Interval Unit</label>
+    <input asp-for="RepeatabilityIntervalUnit" class="form-control" />
+    <span asp-validation-for="RepeatabilityIntervalUnit" class="text-danger"></span>
+</div>
+
+<div class="form-group mb-3">
     <label asp-for="RepeatabilityIntervalPace" class="form-label">Interval Pace</label>
     <select asp-for="RepeatabilityIntervalPace" class="form-select">
         <option value="">Select Interval Pace</option>

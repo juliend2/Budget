@@ -10,13 +10,13 @@ public class ExpenseTemplateForm
     public string Description { get; set; } = string.Empty;
 
     [Required]
-    public DateTime InitialToBePaidOn { get; set; }
+    public DateTime InitialToBePaidOn { get; set; } = DateTime.Today;
 
     [Required]
     public int RepeatabilityIntervalUnit { get; set; }
 
     [Required]
-    public int RepeatabilityIntervalPace { get; set; }
+    public string RepeatabilityIntervalPace { get; set; } = string.Empty;
 
     [Required]
     public decimal Amount { get; set; }

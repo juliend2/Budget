@@ -37,9 +37,18 @@ public class ExpenseTemplates : IExpenseTemplates
     {
         using var connection = new MySqlConnection(_connectionString);
         await connection.ExecuteAsync(
-            @"INSERT INTO expense_templates (description, amount)
-              VALUES (@Description, @Amount)",
-            new { form.Description, form.Amount });
+            @"INSERT INTO expense_templates
+                (description, amount, initial_to_be_paid_on, repeatability_interval_unit, repeatability_interval_pace, is_on_hold)
+              VALUES
+                (@Description, @Amount, @InitialToBePaidOn, @RepeatabilityIntervalUnit, @RepeatabilityIntervalPace, @IsOnHold)",
+            new {
+                form.Description,
+                form.Amount,
+                form.InitialToBePaidOn,
+                form.RepeatabilityIntervalUnit,
+                form.RepeatabilityIntervalPace,
+                form.IsOnHold
+            });
     }
 
     public async Task UpdateAsync(ExpenseTemplateForm form)
@@ -47,8 +56,22 @@ public class ExpenseTemplates : IExpenseTemplates
         using var connection = new MySqlConnection(_connectionString);
         await connection.ExecuteAsync(
             @"UPDATE expense_templates
-              SET description = @Description, amount = @Amount
+              SET
+                description = @Description,
+                amount = @Amount,
+                initial_to_be_paid_on = @InitialToBePaidOn,
+                repeatability_interval_unit = @RepeatabilityIntervalUnit,
+                repeatability_interval_pace = @RepeatabilityIntervalPace,
+                is_on_hold = @IsOnHold
               WHERE id = @Id",
-            new { form.Description, form.Amount, form.Id });
+            new {
+                form.Description,
+                form.Amount,
+                form.InitialToBePaidOn,
+                form.RepeatabilityIntervalUnit,
+                form.RepeatabilityIntervalPace,
+                form.IsOnHold,
+                form.Id
+            });
     }
 }
