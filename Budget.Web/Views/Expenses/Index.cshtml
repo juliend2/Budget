@@ -13,7 +13,6 @@
             <th class="left-padding">Description</th>
             <th class="left-padding">Date</th>
             <th class="left-padding">Amount</th>
-            <th class="left-padding">Remaining</th>
             <th></th>
         </tr>
         @foreach (var budgetChunk in Model)
@@ -23,13 +22,12 @@
                 <tr>
                     <td class='left-padding'>@item.Description</td>
                     <td class='left-padding'>@item.ToBePaidAt.ToShortDateString()</td>
-                    <td class='left-padding  right  gray'>
-                        @item.Amount $
+                    <td class='left-padding  right'>
+                        @item.Remaining $
                         <a
                             asp-route="CreatePayment"
                             asp-route-expenseId="@item.Id">Payer</a>
                     </td>
-                    <td class='left-padding  right'>@item.Remaining $</td>
                     <td class='left-padding'>
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">Edit</a>
                         <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline">

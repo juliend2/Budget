@@ -9,16 +9,19 @@ namespace Budget.Web.Controllers;
 public class PaymentsController : Controller
 {
     private readonly IPayments _repository;
+    private readonly IExpenses _expenses;
 
-    public PaymentsController(IPayments repository)
+    public PaymentsController(IPayments repository, IExpenses expenses)
     {
         _repository = repository;
+        _expenses = expenses;
     }
 
     [HttpGet("Create", Name = "CreatePayment")]
-    public IActionResult Create(int expenseId)
+    public async Task<IActionResult> Create(int expenseId)
     {
-        return View(new PaymentForm() { ExpenseId = expenseId });
+        var remaining = await _expenses.GetExpenseRemainingAmountAsync(expenseId);
+        return View(new PaymentForm() { ExpenseId = expenseId, Amount = remaining });
     }
 
     [HttpPost("Create", Name = "CreatePayment")]
