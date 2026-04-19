@@ -7,7 +7,10 @@ namespace Budget.Web.Repositories;
 public interface IExpenseTemplates
 {
     Task<IEnumerable<ExpenseTemplate>> GetAllAsync();
+    Task<ExpenseTemplate?> GetByIdAsync(int id);
     Task CreateAsync(ExpenseTemplateForm form);
+    Task UpdateAsync(ExpenseTemplateForm form);
+    Task DeleteAsync(int id);
 }
 
 public class ExpenseTemplates : IExpenseTemplates
@@ -31,6 +34,22 @@ public class ExpenseTemplates : IExpenseTemplates
                         repeatability_interval_pace AS RepeatabilityIntervalPace,
                         is_on_hold AS IsOnHold
               FROM expense_templates");
+    }
+
+    public async Task<ExpenseTemplate?> GetByIdAsync(int id)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+        return await connection.QuerySingleOrDefaultAsync<ExpenseTemplate>(
+            @"SELECT    id,
+                        description,
+                        amount,
+                        initial_to_be_paid_on AS InitialToBePaidOn,
+                        repeatability_interval_unit AS RepeatabilityIntervalUnit,
+                        repeatability_interval_pace AS RepeatabilityIntervalPace,
+                        is_on_hold AS IsOnHold
+              FROM expense_templates
+              WHERE id = @Id",
+            new { Id = id });
     }
 
     public async Task CreateAsync(ExpenseTemplateForm form)
@@ -73,5 +92,13 @@ public class ExpenseTemplates : IExpenseTemplates
                 form.IsOnHold,
                 form.Id
             });
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        using var connection = new MySqlConnection(_connectionString);
+        await connection.ExecuteAsync(
+            "DELETE FROM expense_templates WHERE id = @Id",
+            new { Id = id });
     }
 }

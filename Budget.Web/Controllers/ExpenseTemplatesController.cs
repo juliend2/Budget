@@ -34,4 +34,36 @@ public class ExpenseTemplatesController : Controller
         await _repository.CreateAsync(form);
         return RedirectToAction("Index");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var template = await _repository.GetByIdAsync(id);
+        if (template == null) return NotFound();
+        return View(new ExpenseTemplateForm
+        {
+            Id = template.Id,
+            Description = template.Description,
+            InitialToBePaidOn = template.InitialToBePaidOn,
+            RepeatabilityIntervalUnit = template.RepeatabilityIntervalUnit,
+            RepeatabilityIntervalPace = template.RepeatabilityIntervalPace,
+            Amount = template.Amount,
+            IsOnHold = template.IsOnHold
+        });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(ExpenseTemplateForm form)
+    {
+        if (!ModelState.IsValid) return View(form);
+        await _repository.UpdateAsync(form);
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _repository.DeleteAsync(id);
+        return RedirectToAction("Index");
+    }
 }
