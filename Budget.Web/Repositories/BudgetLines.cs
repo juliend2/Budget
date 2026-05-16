@@ -127,6 +127,21 @@ public class BudgetLines : IBudgetLines
                 CASE
                     WHEN repeatability_interval_pace = 'W' THEN DATE_ADD(ToBePaidAt, INTERVAL CAST(repeatability_interval_unit AS SIGNED) WEEK)
                     WHEN repeatability_interval_pace = 'D' THEN DATE_ADD(ToBePaidAt, INTERVAL CAST(repeatability_interval_unit AS SIGNED) DAY)
+                    WHEN repeatability_interval_pace = 'HM' THEN DATE_ADD(
+                        ToBePaidAt,
+                        INTERVAL CAST(
+                            repeatability_interval_unit * (
+                                SELECT FLOOR(
+                                    DAY(
+                                        LAST_DAY(
+                                            ToBePaidAt
+                                        )
+                                    ) / 2
+                                )
+                            )
+                            AS SIGNED)
+                        DAY
+                    )
                     WHEN repeatability_interval_pace = 'M' THEN DATE_ADD(ToBePaidAt, INTERVAL CAST(repeatability_interval_unit AS SIGNED) MONTH)
                     WHEN repeatability_interval_pace = 'Y' THEN DATE_ADD(ToBePaidAt, INTERVAL CAST(repeatability_interval_unit AS SIGNED) YEAR)
                 END AS NextPaymentDate
